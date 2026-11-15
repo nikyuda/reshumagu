@@ -1,5 +1,5 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
-import { useAuth } from "../lib/auth.jsx";
+import { displayName, useAuth } from "../lib/auth.jsx";
 import { configured } from "../lib/supabase.js";
 import logoHeader from "../assets/logo-header.png";
 import logoFooter from "../assets/logo-footer.png";
@@ -11,7 +11,7 @@ const navClass = ({ isActive }) =>
 
 export default function Layout() {
   const { user, signOut } = useAuth();
-  const name = user?.email?.split("@")[0] ?? "";
+  const name = displayName(user);
 
   return (
     <div className="flex min-h-screen flex-col bg-paper">
