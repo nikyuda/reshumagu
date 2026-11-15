@@ -9,8 +9,8 @@ const AuthContext = createContext({
 
 export const useAuth = () => useContext(AuthContext);
 
-// 
-export function getDisplayName(user) {
+// ✅ Экспортируем функцию с именем displayName (как этого ждет Layout)
+export function displayName(user) {
   if (!user) return "";
   return (
     user.user_metadata?.full_name ||
@@ -19,9 +19,6 @@ export function getDisplayName(user) {
     ""
   );
 }
-
-// 
-export const displayName = ""; // либо получайте из контекста
 
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
@@ -43,7 +40,7 @@ export function AuthProvider({ children }) {
   const value = {
     user,
     loading,
-    displayName: getDisplayName(user), // 
+    displayName: displayName(user), // ✅ Теперь тут вызывается функция
     signOut: () => supabase.auth.signOut(),
   };
 
