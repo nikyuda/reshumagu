@@ -154,6 +154,9 @@ export default function Home() {
                   </div>
                   <span className="text-[22px] font-bold">{u.short_name}</span>
                   <span className="text-sm leading-[1.35] text-muted">{u.name}</span>
+                  {dir && !offers && (
+                    <span className="text-xs font-semibold text-accent">Этого экзамена здесь пока нет</span>
+                  )}
                 </button>
               );
             })}
