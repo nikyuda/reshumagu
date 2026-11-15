@@ -8,6 +8,7 @@ import Exam from "./pages/Exam.jsx";
 import Test from "./pages/Test.jsx";
 import Result from "./pages/Result.jsx";
 import Profile from "./pages/Profile.jsx";
+import Soon from "./pages/Soon.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
 function Protected({ children }) {
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="test/:attemptId" element={<Protected><Test /></Protected>} />
         <Route path="result/:attemptId" element={<Protected><Result /></Protected>} />
         <Route path="profile" element={<Protected><Profile /></Protected>} />
+        <Route path="soon" element={<Soon />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

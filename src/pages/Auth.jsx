@@ -9,6 +9,12 @@ const ERRORS = {
   "Email not confirmed": "Email не подтверждён. Проверьте почту",
 };
 
+const FACTS = [
+  ["100%", "бесплатный доступ"],
+  ["0 сек", "мгновенная проверка"],
+  ["2 вуза", "АлтГУ и АлтГТУ"],
+];
+
 export default function Auth() {
   const { user } = useAuth();
   const nav = useNavigate();
@@ -30,7 +36,7 @@ export default function Auth() {
     setInfo("");
 
     if (!/^\S+@\S+\.\S+$/.test(email.trim())) return setError("Введите корректный email");
-    if (password.length < 6) return setError("Пароль должен быть не короче 6 символов");
+    if (password.length < 8) return setError("Пароль должен быть не короче 8 символов");
 
     setBusy(true);
     if (mode === "login") {
@@ -46,59 +52,105 @@ export default function Auth() {
     setBusy(false);
   }
 
+  const isLogin = mode === "login";
+
   return (
-    <div className="mx-auto grid max-w-3xl gap-4 md:grid-cols-2">
-      <div className="rounded-3xl bg-brand p-8 text-white">
-        <h1 className="text-3xl font-extrabold leading-tight">
-          Готовься <span className="text-leaf">к поступлению</span> с умом!
-        </h1>
-        <p className="mt-3 text-sm opacity-80">
-          Решайте тесты в формате вступительных экзаменов и сразу видьте свои результаты.
-        </p>
+    <div className="flex flex-col gap-6 lg:min-h-[720px] lg:flex-row">
+      {/* Промо */}
+      <div className="flex min-w-0 flex-1 flex-col justify-between gap-10 rounded-[32px] bg-brand p-8 md:rounded-[50px] md:p-16">
+        <div className="flex flex-col gap-6">
+          <h1 className="text-5xl font-extrabold leading-[1.04] tracking-[-0.02em] text-white md:text-[64px]">
+            Готовься
+            <br />
+            <span className="text-leaf">к поступлению</span>
+            <br />
+            с умом!
+          </h1>
+          <p className="text-xl leading-[1.45] text-white/85">
+            Решайте тесты в формате вступительных
+            <br className="hidden md:block" /> экзаменов и сразу видите свои ошибки
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-4">
+          {FACTS.map(([big, label]) => (
+            <div key={big} className="flex flex-col gap-1 rounded-[32px] bg-white/[0.12] px-[26px] py-[22px]">
+              <p className="text-[32px] font-bold text-white">{big}</p>
+              <p className="text-[15px] text-white/85">{label}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <form onSubmit={submit} className="card">
-        <h2 className="text-2xl font-extrabold">{mode === "login" ? "С возвращением!" : "Создайте аккаунт"}</h2>
+      {/* Форма */}
+      <form
+        onSubmit={submit}
+        className="flex w-full flex-col justify-center gap-[22px] rounded-[32px] bg-white p-8 md:rounded-[50px] md:p-14 lg:w-[560px] lg:shrink-0"
+      >
+        <h2 className="text-[36px] font-extrabold tracking-[-0.01em]">
+          {isLogin ? "С возвращением!" : "Создайте аккаунт"}
+        </h2>
+        <p className="-mt-3 text-[17px] text-muted">
+          {isLogin ? "Войдите, чтобы продолжить подготовку" : "Это бесплатно и займёт меньше минуты"}
+        </p>
 
-        <div className="my-4 grid grid-cols-2 rounded-full bg-neutral-100 p-1 text-sm font-bold">
-          {[["login", "Вход"], ["register", "Регистрация"]].map(([value, label]) => (
+        <div className="flex rounded-full bg-tint p-1.5">
+          {[
+            ["login", "Вход"],
+            ["register", "Регистрация"],
+          ].map(([value, label]) => (
             <button
               type="button"
               key={value}
-              onClick={() => { setMode(value); setError(""); setInfo(""); }}
-              className={`rounded-full py-2 ${mode === value ? "bg-brand text-white" : "text-neutral-600"}`}
+              onClick={() => {
+                setMode(value);
+                setError("");
+                setInfo("");
+              }}
+              className={`flex-1 rounded-full py-3.5 text-[17px] ${
+                mode === value ? "bg-brand font-bold text-white" : "font-semibold text-black"
+              }`}
             >
               {label}
             </button>
           ))}
         </div>
 
-        <label className="mb-1 block text-xs font-bold text-neutral-500">Email</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="name@mail.ru"
-          autoComplete="email"
-          className="input mb-3"
-        />
+        <label className="flex flex-col gap-2">
+          <span className="text-[15px] font-bold">Email</span>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="name@mail.ru"
+            autoComplete="email"
+            className="input"
+          />
+        </label>
 
-        <label className="mb-1 block text-xs font-bold text-neutral-500">Пароль</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Не короче 6 символов"
-          autoComplete={mode === "login" ? "current-password" : "new-password"}
-          className="input mb-4"
-        />
+        <label className="flex flex-col gap-2">
+          <span className="text-[15px] font-bold">Пароль</span>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Не короче 8 символов"
+            autoComplete={isLogin ? "current-password" : "new-password"}
+            className="input"
+          />
+        </label>
 
-        {error && <p className="mb-3 rounded-xl bg-red-100 p-3 text-sm font-semibold text-red-700">{error}</p>}
-        {info && <p className="mb-3 rounded-xl bg-leaf/30 p-3 text-sm font-semibold">{info}</p>}
+        {error && <p className="rounded-2xl bg-[#FFF1F1] p-3.5 text-sm font-semibold text-red-700">{error}</p>}
+        {info && <p className="rounded-2xl bg-leaf/25 p-3.5 text-sm font-semibold">{info}</p>}
 
-        <button type="submit" disabled={busy} className="btn-brand w-full">
-          {busy ? "Подождите…" : mode === "login" ? "Войти" : "Зарегистрироваться"}
+        <button
+          type="submit"
+          disabled={busy}
+          className="w-full rounded-full bg-brand py-5 text-lg font-bold text-white transition hover:bg-brand/90 disabled:opacity-60"
+        >
+          {busy ? "Подождите…" : isLogin ? "Войти" : "Зарегистрироваться"}
         </button>
+
+        <p className="text-sm text-muted">Регистрация бесплатна. Пароль хранится в зашифрованном виде.</p>
       </form>
     </div>
   );

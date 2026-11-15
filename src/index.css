@@ -8,7 +8,7 @@ body {
 
 @layer components {
   .card {
-    @apply rounded-3xl bg-white p-6 md:p-8;
+    @apply rounded-[32px] bg-white p-6 md:rounded-[50px] md:p-10;
   }
   .btn {
     @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-50;
@@ -26,6 +26,6 @@ body {
     @apply btn bg-neutral-900 text-white hover:bg-neutral-800;
   }
   .input {
-    @apply w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none focus:border-brand;
+    @apply w-full rounded-[20px] border-[1.5px] border-line bg-white px-5 py-[18px] text-[17px] outline-none placeholder:text-muted focus:border-brand;
   }
 }
