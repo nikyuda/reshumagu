@@ -3,7 +3,7 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "22"
   # Публичные значения Supabase (адрес проекта и publishable-ключ) по задумке попадают в сайт.
   # Без этой строки сканер секретов Netlify может принять их за утечку и остановить сборку.
   SECRETS_SCAN_OMIT_KEYS = "VITE_SUPABASE_URL,VITE_SUPABASE_PUBLISHABLE_KEY,SUPABASE_URL"
