@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "../lib/supabase.js";
-import { useAuth } from "../lib/auth.jsx";
+import { displayName, useAuth } from "../lib/auth.jsx";
 import { MODE_LABEL, formatDuration } from "../lib/format.js";
 
 export default function Profile() {
@@ -61,10 +61,10 @@ export default function Profile() {
       <div className="grid gap-4 md:grid-cols-3">
         <div className="card flex items-center gap-4">
           <div className="grid h-14 w-14 place-items-center rounded-2xl bg-brand/10 text-2xl font-extrabold text-brand">
-            {user.email[0].toUpperCase()}
+            {displayName(user).charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0">
-            <div className="truncate font-extrabold">{user.email.split("@")[0]}</div>
+            <div className="truncate font-extrabold">{displayName(user)}</div>
             <div className="truncate text-xs text-neutral-500">{user.email}</div>
           </div>
         </div>
