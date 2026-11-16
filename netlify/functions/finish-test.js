@@ -1,7 +1,3 @@
-// POST /api/finish-test
-// Тело: { attempt_id }
-// Закрывает попытку, считает баллы и возвращает разбор всех вопросов.
-// Повторный вызов безопасен — вернёт те же результаты.
 import { db, json, fail, route, loadOwnAttempt } from "../lib/common.js";
 
 export default route("POST", async ({ user, body }) => {
@@ -34,7 +30,6 @@ export default route("POST", async ({ user, body }) => {
       .eq("id", attemptId).is("finished_at", null);
   }
 
-  // Разбор
   const qIds = rows.map((r) => r.question_id);
   const [{ data: questions }, { data: options }] = await Promise.all([
     db.from("questions").select("id, body, explanation, image_url").in("id", qIds),
