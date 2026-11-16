@@ -1,5 +1,3 @@
--- Имя (никнейм) из регистрации попадает в профиль.
--- Выполнить один раз в Supabase → SQL Editor.
 create or replace function handle_new_user() returns trigger
 language plpgsql security definer set search_path = public as $$
 begin
