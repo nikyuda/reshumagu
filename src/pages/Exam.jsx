@@ -83,7 +83,6 @@ export default function Exam() {
   const uni = exam.universities;
   const hasEmptyTopics = topics.some((t) => Number(t.questions_count) === 0);
 
-  // Группировка тем по разделам
   const groups = [];
   for (const t of topics) {
     const name = t.section || "";
