@@ -1,6 +1,5 @@
 import { supabase } from "./supabase.js";
 
-// Вызов наших Netlify-функций с токеном текущего пользователя
 async function call(path, body) {
   const { data } = await supabase.auth.getSession();
   const token = data.session?.access_token ?? "";
