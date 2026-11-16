@@ -4,21 +4,17 @@
 
 [build.environment]
   NODE_VERSION = "22"
-  # Публичные значения Supabase (адрес проекта и publishable-ключ) по задумке попадают в сайт.
-  # Без этой строки сканер секретов Netlify может принять их за утечку и остановить сборку.
   SECRETS_SCAN_OMIT_KEYS = "VITE_SUPABASE_URL,VITE_SUPABASE_PUBLISHABLE_KEY,SUPABASE_URL"
 
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
-# /api/start-test -> /.netlify/functions/start-test и т.д.
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
 
-# SPA: все остальные пути отдают index.html (React Router)
 [[redirects]]
   from = "/*"
   to = "/index.html"
