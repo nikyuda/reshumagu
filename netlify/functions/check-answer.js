@@ -1,7 +1,3 @@
-// POST /api/check-answer
-// Тело: { attempt_id, question_id, option_id }
-// Мгновенная проверка: верно/неверно, правильный вариант и пояснение.
-// Один вопрос — один ответ (повторно ответить нельзя).
 import { db, json, fail, route, loadOwnAttempt } from "../lib/common.js";
 
 export default route("POST", async ({ user, body }) => {
@@ -27,7 +23,6 @@ export default route("POST", async ({ user, body }) => {
   if (!chosen) return fail(400, "Такого варианта нет у этого вопроса");
   const correct = options.find((o) => o.is_correct);
 
-  // Запись только если ответа ещё нет — защита от двойного клика / гонки
   const { data: updated } = await db
     .from("attempt_answers")
     .update({
