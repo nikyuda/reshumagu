@@ -17,7 +17,6 @@ export default function Test() {
   const nav = useNavigate();
   const key = `attempt:${attemptId}`;
 
-  // Вопросы хранятся в sessionStorage, поэтому тест переживает обновление страницы
   const [data] = useState(() => load(key));
   const [answers, setAnswers] = useState(() => data?.answers ?? {});
   const [idx, setIdx] = useState(() => {
