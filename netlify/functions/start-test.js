@@ -1,6 +1,3 @@
-// POST /api/start-test
-// Тело: { exam_id, mode: "topic" | "full_exam", topic_id? }
-// Создаёт попытку, выбирает случайные вопросы и возвращает их БЕЗ правильных ответов.
 import { db, json, fail, route, shuffle } from "../lib/common.js";
 
 const MAX_TOPIC_QUESTIONS = 30; // потолок для теста по одной теме
@@ -19,7 +16,6 @@ export default route("POST", async ({ user, body }) => {
     .from("exams").select("id, is_active, questions_per_full_test").eq("id", examId).maybeSingle();
   if (!exam || !exam.is_active) return fail(404, "Экзамен не найден");
 
-  // Темы, из которых берём вопросы
   let topicIds;
   if (mode === "topic") {
     const { data: topic } = await db
@@ -39,7 +35,6 @@ export default route("POST", async ({ user, body }) => {
   const limit = mode === "full_exam" ? exam.questions_per_full_test : MAX_TOPIC_QUESTIONS;
   const picked = shuffle(pool.map((q) => q.id)).slice(0, limit);
 
-  // Попытка
   const { data: attempt, error: attemptErr } = await db
     .from("test_attempts")
     .insert({
@@ -61,7 +56,6 @@ export default route("POST", async ({ user, body }) => {
     throw rowsErr;
   }
 
-  // Вопросы и варианты — без is_correct, без пояснений
   const [{ data: questions }, { data: options }] = await Promise.all([
     db.from("questions").select("id, body, topic_id").in("id", picked),
     db.from("answer_options").select("id, question_id, body, position").in("question_id", picked).order("position"),
