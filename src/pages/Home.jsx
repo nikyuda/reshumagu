@@ -25,7 +25,6 @@ export default function Home() {
       });
   }, []);
 
-  // Направления = уникальные названия экзаменов по всем вузам
   const directions = useMemo(() => {
     const map = new Map();
     for (const u of unis ?? []) {
