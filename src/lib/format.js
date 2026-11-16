@@ -1,4 +1,3 @@
-// plural(5, ["вопрос", "вопроса", "вопросов"]) -> "вопросов"
 export function plural(n, forms) {
   const a = Math.abs(n) % 100;
   const b = a % 10;
