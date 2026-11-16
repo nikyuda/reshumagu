@@ -1,5 +1,3 @@
-// Временные иконки направлений: в выгрузке из Figma они пришли пустыми (1×1 px).
-// Когда пришлёте оригиналы, заменим этот файл.
 export default function ExamIcon({ title = "", size = 44 }) {
   const common = {
     width: size,
