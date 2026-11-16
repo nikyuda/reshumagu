@@ -9,7 +9,6 @@ const AuthContext = createContext({
 
 export const useAuth = () => useContext(AuthContext);
 
-// ✅ Экспортируем функцию с именем displayName (как этого ждет Layout)
 export function displayName(user) {
   if (!user) return "";
   return (
@@ -40,7 +39,7 @@ export function AuthProvider({ children }) {
   const value = {
     user,
     loading,
-    displayName: displayName(user), // ✅ Теперь тут вызывается функция
+    displayName: displayName(user), 
     signOut: () => supabase.auth.signOut(),
   };
 
