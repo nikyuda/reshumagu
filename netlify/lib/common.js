@@ -1,8 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import ws from "ws";
 
-// Серверный клиент с service_role: видит is_correct, обходит RLS.
-// Поэтому каждая функция САМА проверяет, что попытка принадлежит пользователю.
 export const db = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY,
@@ -36,7 +34,6 @@ async function getUser(req) {
   return error ? null : data.user;
 }
 
-// Обёртка: метод, авторизация, разбор JSON, обработка ошибок.
 export function route(method, handler) {
   return async (req) => {
     if (req.method !== method) return fail(405, "Метод не поддерживается");
@@ -57,7 +54,6 @@ export function route(method, handler) {
   };
 }
 
-// Достаёт попытку и проверяет, что она принадлежит пользователю.
 export async function loadOwnAttempt(attemptId, userId, columns = "id, user_id, finished_at") {
   const { data } = await db.from("test_attempts").select(columns).eq("id", attemptId).maybeSingle();
   return data && data.user_id === userId ? data : null;
