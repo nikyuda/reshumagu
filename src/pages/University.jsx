@@ -5,7 +5,6 @@ import ExamIcon from "../components/ExamIcon.jsx";
 import goat from "../assets/goat.png";
 import wait from "../assets/wait.png";
 
-// Картинка на карточке «Дальше — больше!» у каждого вуза
 const SURPRISE = { "АлтГУ": goat, "АлтГТУ": wait };
 
 export default function University() {
