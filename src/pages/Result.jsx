@@ -9,7 +9,6 @@ export default function Result() {
   const [res, setRes] = useState(null);
   const [error, setError] = useState("");
 
-  // Данные попытки нужны только для названия экзамена и ссылки «Решать дальше»
   const meta = useMemo(() => {
     try {
       return JSON.parse(sessionStorage.getItem(`attempt:${attemptId}`));
@@ -18,7 +17,6 @@ export default function Result() {
     }
   }, [attemptId]);
 
-  // finish-test можно вызывать повторно — он вернёт те же результаты
   useEffect(() => {
     let alive = true;
     finishTest({ attempt_id: Number(attemptId) })
